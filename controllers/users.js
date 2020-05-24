@@ -13,7 +13,8 @@ const Error401 = require('../errors/err401');
 const Error403 = require('../errors/err401');
 const Error500 = require('../errors/err500');
 
-const { NODE_ENV, JWT_SECRET } = require('../config');
+// const { NODE_ENV, JWT_SECRET } = require('../config');
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 // возвращает пользователя
 module.exports.getUsers = (req, res, next) => {
