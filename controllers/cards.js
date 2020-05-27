@@ -1,18 +1,13 @@
-/* eslint-disable no-unused-vars */
-
-const mongoose = require('mongoose');
 const cardModel = require('../models/card.js');
 
 const Error404 = require('../errors/err404');
-const Error401 = require('../errors/err401');
 const Error403 = require('../errors/err403');
-const Error500 = require('../errors/err500');
 
 // возвращает все карточки
 module.exports.getCards = (req, res, next) => {
   cardModel.find({})
     .then((cards) => res.send(cards))
-    .catch((err) => next(new Error500(err.message)));
+    .catch(next);
 };
 
 // создаёт карточку
@@ -20,7 +15,7 @@ module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
   cardModel.create({ name, link, owner: req.user._id })
     .then((card) => res.status(200).send(card))
-    .catch((err) => next(new Error401('Введите все данные корректно')));
+    .catch(next);
 };
 
 //  удаляет карточку по идентификатору
@@ -47,5 +42,5 @@ module.exports.deleteCard = (req, res, next) => {
       }
       res.send({ remove: cardRemove });
     })
-    .catch((err) => next(new Error500(err.message)));
+    .catch(next);
 };
